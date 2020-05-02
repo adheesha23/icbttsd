@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 
 class ReportsController extends Controller
 {
+    const REPORT_API = 'http://api.securedserver.xyz/api/report/';
     const SALES_URL = 'http://api.securedserver.xyz/api/report/sales';
     const SALES_THEATRES = 'http://api.securedserver.xyz/api/theatre';
     const SALES_THEATRE_WISE = 'http://api.securedserver.xyz/api/report/box-office?StartDate=2020-01-31&EndDate=2020-02-04';
@@ -52,6 +53,35 @@ class ReportsController extends Controller
         $pdf->save(storage_path() . '_filename.pdf');
         // Finally, you can download the file using download function
         return $pdf->download('reports.sales');
+
+    }
+
+    public function boxOfficeSummary(Request $request)
+    {
+        $requestParams = $request->all();
+        $fomDate = null;
+        $toDate = null;
+        if($requestParams){
+            $request->validate([
+                'from-date'   => 'required|date|date_format:Y-m-d|before:to-date',
+                'to-date'   => 'required|date|date_format:Y-m-d|after:from-date',
+            ]);
+            $fomDate = $requestParams['from-date'];
+            $toDate = $requestParams['to-date'];
+            $param = 'box-office?StartDate='.$fomDate.'&EndDate='.$toDate;
+        } else {
+            $param = 'box-office';
+        }
+
+        $client = new Client();
+        $res = $client->get(self::REPORT_API.$param);
+        $response = json_decode($res->getBody());
+        $theaterSales = $response->theatreSales;
+
+        $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
+
+        return view('reports.summary', compact('theaterSales', 'dateRage'));
+
 
     }
 }

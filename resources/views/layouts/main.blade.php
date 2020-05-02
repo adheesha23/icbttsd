@@ -259,7 +259,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ url('/sales') }}" class="nav-link">
+                                <a href="{{ url('/box-office-summary') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Box Office Summary Weekly</p>
                                 </a>
@@ -743,6 +743,15 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         @yield('content')
     </div>
     <!-- /.content-wrapper -->

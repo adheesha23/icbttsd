@@ -36,4 +36,7 @@ Route::get('/charts', function () {
 //Route::get('/listings', 'Content\ContentController@index')->name('contents.index');
 
 Route::get('/sales', 'ReportsController@sales')->name('reports.sales');
+
+Route::get('/box-office-summary', 'ReportsController@boxOfficeSummary');
+Route::post('/box-office-summary', 'ReportsController@boxOfficeSummary')->name('reports.boxofficesummary');
 Route::get('/sales/pdf','ReportsController@export_pdf');
