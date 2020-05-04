@@ -40,4 +40,5 @@ Route::get('/sales', 'ReportsController@sales')->name('reports.sales');
 Route::get('/box-office-summary', 'ReportsController@boxOfficeSummary');
 Route::post('/box-office-summary', 'ReportsController@boxOfficeSummary')->name('reports.boxofficesummary');
 Route::get('/theatres', 'ReportsController@getTheatres');
+Route::get('/movies', 'ReportsController@getAllMovies');
 Route::get('/sales/pdf','ReportsController@export_pdf');

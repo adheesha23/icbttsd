@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Services\ReportsService;
 use App\Services\TheatreService;
+use App\Services\MovieService;
 use Illuminate\View\View;
 
 class ReportsController extends Controller
@@ -22,17 +23,23 @@ class ReportsController extends Controller
      * @var TheatreService
      */
     private $theatreService;
+    /**
+     * @var MovieService
+     */
+    private $movieService;
 
     /**
      * ReportsController constructor.
      * @param ReportsService $reportService
      * @param TheatreService $theatreService
+     * @param MovieService $movieService
      */
-    public function __construct(ReportsService $reportService, TheatreService $theatreService)
+    public function __construct(ReportsService $reportService, TheatreService $theatreService, MovieService $movieService)
     {
         $this->middleware('auth');
         $this->reportService =  $reportService;
         $this->theatreService = $theatreService;
+        $this->movieService = $movieService;
     }
 
     /**
@@ -92,5 +99,14 @@ class ReportsController extends Controller
     {
         $records = $this->theatreService->getAllTheatres();
         return view('reports.theatres', compact('records'));
+    }
+
+    /**
+     * @return Application|Factory|View
+     */
+    public function getAllMovies()
+    {
+        $records = $this->movieService->getAllMovies();
+        return view('reports.movies', compact('records'));
     }
 }
