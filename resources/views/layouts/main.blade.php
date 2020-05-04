@@ -265,9 +265,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/sales') }}" class="nav-link">
+                                <a href="{{ url('/theatres') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Cashier Shift Summary</p>
+                                    <p>Theatres</p>
                                 </a>
                             </li>
                             <li class="nav-item">
