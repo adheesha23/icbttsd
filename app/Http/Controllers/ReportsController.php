@@ -2,45 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use GuzzleHttp\Client;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Services\ReportsService;
+use Illuminate\View\View;
 
 class ReportsController extends Controller
 {
-    const REPORT_API = 'http://api.securedserver.xyz/api/report/';
-    const SALES_URL = 'http://api.securedserver.xyz/api/report/sales';
-    const SALES_THEATRES = 'http://api.securedserver.xyz/api/theatre';
-    const SALES_THEATRE_WISE = 'http://api.securedserver.xyz/api/report/box-office?StartDate=2020-01-31&EndDate=2020-02-04';
+    /**
+     * @var ReportsService
+     */
+    private $reportService;
 
-    public function __construct()
+    /**
+     * ReportsController constructor.
+     * @param ReportsService $reportService
+     */
+    public function __construct(ReportsService $reportService)
     {
         $this->middleware('auth');
+        $this->reportService =  $reportService;
     }
 
-    public function sales()
-    {
-
-        $client = new Client();
-        $res = $client->get(self::SALES_URL);
-//        echo $res->getStatusCode(); // 200
-//        echo $res->getBody();
-        $response = json_decode($res->getBody());
-
-//        dd($response);
-        $theaterSales = $response->result->theatreSales;
-//        dd($theaterSales);
-        return view('reports.sales', compact('theaterSales'));
-
-
-    }
-
-    public function getSalesReport()
-    {
-
-    }
-
+    /**
+     * @return mixed
+     */
     public function export_pdf()
     {
         $client = new Client();
@@ -56,11 +46,16 @@ class ReportsController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return Application|Factory|View
+     */
     public function boxOfficeSummary(Request $request)
     {
         $requestParams = $request->all();
         $fomDate = null;
         $toDate = null;
+
         if($requestParams){
             $request->validate([
                 'from-date'   => 'required|date|date_format:Y-m-d|before:to-date',
@@ -70,18 +65,16 @@ class ReportsController extends Controller
             $toDate = $requestParams['to-date'];
             $param = 'box-office?StartDate='.$fomDate.'&EndDate='.$toDate;
         } else {
-            $param = 'box-office';
+            $param = 'box-office?StartDate=2020-01-01&EndDate=2020-06-01';
         }
 
-        $client = new Client();
-        $res = $client->get(self::REPORT_API.$param);
-        $response = json_decode($res->getBody());
+        $response = $this->reportService->getApiData($param);
+
         $theaterSales = $response->theatreSales;
 
         $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
 
         return view('reports.summary', compact('theaterSales', 'dateRage'));
-
 
     }
 }
