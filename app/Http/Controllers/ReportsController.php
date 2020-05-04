@@ -12,6 +12,8 @@ use App\Services\ReportsService;
 use App\Services\TheatreService;
 use App\Services\MovieService;
 use Illuminate\View\View;
+use Carbon\Carbon;
+use Illuminate\Support\MessageBag;
 
 class ReportsController extends Controller
 {
@@ -108,5 +110,33 @@ class ReportsController extends Controller
     {
         $records = $this->movieService->getAllMovies();
         return view('reports.movies', compact('records'));
+    }
+
+    /**
+     * @param Request $request
+     * @param MessageBag $message_bag
+     * @return Application|Factory|View
+     */
+    public function getTicketSalesTodayByTheatre(Request $request, MessageBag $message_bag)
+    {
+        $requestParams = $request->all();
+        $param = null;
+        $records = null;
+
+        if($requestParams) {
+            $theatreId = $requestParams['theatreSelect'];
+            $nowTime = Carbon::now();
+            $toDate = date('Y-m-d', strtotime($nowTime->toDateTimeString()));
+
+            $param = 'ticket-sales?TheatreId='.$theatreId.'&Date=' . $toDate;
+
+            $response = $this->reportService->getApiData($param);
+            $records = $response->results;
+        }
+
+        $theatres = $this->theatreService->getAllTheatres();
+
+        return view('reports.todaySales', compact('records', 'theatres'));
+
     }
 }

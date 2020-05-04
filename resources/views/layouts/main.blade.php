@@ -289,9 +289,9 @@
 {{--                                </a>--}}
 {{--                            </li>--}}
                             <li class="nav-item">
-                                <a href="{{ url('/sales') }}" class="nav-link">
+                                <a href="{{ url('/sales-today') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Daily Collection Report</p>
+                                    <p>Ticket Sales Today</p>
                                 </a>
                             </li>
                             <li class="nav-item">
