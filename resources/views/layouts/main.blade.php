@@ -259,6 +259,18 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="{{ url('/tickets-sales') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ticket Sales</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/sales-today') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ticket Sales Today</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/box-office-summary') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Box Office Summary Weekly</p>
@@ -288,12 +300,7 @@
 {{--                                    <p>FnB By Day</p>--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
-                            <li class="nav-item">
-                                <a href="{{ url('/sales-today') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Ticket Sales Today</p>
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a href="{{ url('/sales') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>

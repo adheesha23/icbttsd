@@ -139,4 +139,40 @@ class ReportsController extends Controller
         return view('reports.todaySales', compact('records', 'theatres'));
 
     }
+
+    /**
+     * @param Request $request
+     * @param MessageBag $message_bag
+     * @return Application|Factory|View
+     */
+    public function getTicketSalesByTheatreAndDate(Request $request, MessageBag $message_bag)
+    {
+        $requestParams = $request->all();
+        $param = null;
+        $records = null;
+        $fomDate = null;
+        $toDate = null;
+        $theatreId = null;
+        if($requestParams) {
+            $theatreId = $requestParams['theatreSelect'];
+            $request->validate([
+                'from-date' => 'required|date|date_format:Y-m-d|before:to-date',
+                'to-date' => 'required|date|date_format:Y-m-d|after:from-date',
+            ]);
+            $fomDate = $requestParams['from-date'];
+            $toDate = $requestParams['to-date'];
+            $param = 'ticket-sales-range?StartDate=' . $fomDate . '&EndDate=' . $toDate . '&TheatreId=' . $theatreId;
+        }else {
+            $param = 'ticket-sales-range?StartDate=2020-01-01&EndDate=2020-06-01&TheatreId=1';
+        }
+            $response = $this->reportService->getApiData($param);
+            $records = $response->results;
+
+
+        $history = ['fromDate' =>$fomDate, 'toDate' => $toDate, 'theatreId' => $theatreId];
+        $theatres = $this->theatreService->getAllTheatres();
+
+        return view('reports.ticketSales', compact('records', 'theatres', 'history'));
+
+    }
 }
