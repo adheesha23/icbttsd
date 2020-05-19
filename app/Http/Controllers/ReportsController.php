@@ -14,6 +14,7 @@ use App\Services\MovieService;
 use Illuminate\View\View;
 use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
+use App\Services\Reports\ExportReportService;
 
 class ReportsController extends Controller
 {
@@ -29,19 +30,26 @@ class ReportsController extends Controller
      * @var MovieService
      */
     private $movieService;
+    /**
+     * @var ExportReportService
+     */
+    private $exportReportService;
 
     /**
      * ReportsController constructor.
      * @param ReportsService $reportService
      * @param TheatreService $theatreService
      * @param MovieService $movieService
+     * @param ExportReportService $exportReportService
      */
-    public function __construct(ReportsService $reportService, TheatreService $theatreService, MovieService $movieService)
+    public function __construct(ReportsService $reportService, TheatreService $theatreService,
+                                MovieService $movieService, ExportReportService $exportReportService)
     {
         $this->middleware('auth');
         $this->reportService =  $reportService;
         $this->theatreService = $theatreService;
         $this->movieService = $movieService;
+        $this->exportReportService = $exportReportService;
     }
 
     /**
@@ -87,6 +95,10 @@ class ReportsController extends Controller
         $response = $this->reportService->getApiData($param);
 
         $theaterSales = $response->theatreSales;
+
+        if (isset($requestParams['export'])){
+            return  $this->exportReportService->getSelectionExport($theaterSales)->generate('box-office-summary-');
+        }
 
         $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
 
@@ -167,6 +179,10 @@ class ReportsController extends Controller
         }
             $response = $this->reportService->getApiData($param);
             $records = $response->results;
+
+            if (isset($requestParams['export'])){
+                return  $this->exportReportService->getSelectionExport($records)->generate('ticket-sales-');
+            }
 
 
         $history = ['fromDate' =>$fomDate, 'toDate' => $toDate, 'theatreId' => $theatreId];

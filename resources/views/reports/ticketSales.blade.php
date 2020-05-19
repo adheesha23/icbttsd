@@ -70,12 +70,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group col-md-3 mt-md-4">
-                            <label></label>
-                            <div class="container">
+                        <div class="form-group col-md-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="export" name="export" value="1">
+                                <label class="form-check-label">Export Report</label>
+                            </div>
+                            <div class="mt-md-2">
                                 <button href="javascript:" class="btn btn-primary" type="submit">Submit</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </form>
