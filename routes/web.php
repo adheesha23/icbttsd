@@ -45,4 +45,6 @@ Route::get('/sales-today', 'ReportsController@getTicketSalesTodayByTheatre');
 Route::post('/sales-today', 'ReportsController@getTicketSalesTodayByTheatre')->name('reports.salestoday');
 Route::get('/tickets-sales', 'ReportsController@getTicketSalesByTheatreAndDate');
 Route::post('/tickets-sales', 'ReportsController@getTicketSalesByTheatreAndDate')->name('reports.ticketssales');
+Route::get('/daily-collection', 'ReportsController@getDailyCollectionByMovieAndTheatre');
+Route::post('/daily-collection', 'ReportsController@getDailyCollectionByMovieAndTheatre')->name('reports.dailycollection');
 Route::get('/sales/pdf','ReportsController@export_pdf');

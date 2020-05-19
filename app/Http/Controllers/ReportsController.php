@@ -175,4 +175,45 @@ class ReportsController extends Controller
         return view('reports.ticketSales', compact('records', 'theatres', 'history'));
 
     }
+
+    /**
+     * @param Request $request
+     * @param MessageBag $message_bag
+     * @return Application|Factory|View
+     */
+    public function getDailyCollectionByMovieAndTheatre(Request $request, MessageBag $message_bag)
+    {
+        $requestParams = $request->all();
+        $param = null;
+        $records = null;
+        $date = null;
+        $movieId = null;
+        $theatreId = null;
+        if($requestParams) {
+            $theatreId = $requestParams['theatreSelect'];
+            $movieId = $requestParams['movieId'];
+            $request->validate([
+                'date' => 'required|date|date_format:Y-m-d',
+            ]);
+            $date = $requestParams['date'];
+            $param = 'daily-collection?MovieId='.$movieId.'&TheatreId='.$theatreId.'&Date='.$date;
+        }else {
+            $param = '';
+        }
+
+        $response = $this->reportService->getApiData($param);
+        if ($response){
+            $records = $response->result;
+        } else {
+            $records = null;
+        }
+
+        $history = ['date' =>$date, 'movieId' => $movieId, 'theatreId' => $theatreId];
+        $theatres = $this->theatreService->getAllTheatres();
+        $movies = $this->movieService->getAllMovies();
+
+
+        return view('reports.dailyCollection', compact('records', 'theatres', 'movies', 'history'));
+
+    }
 }

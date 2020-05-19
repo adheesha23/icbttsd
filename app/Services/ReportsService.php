@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 
 /**
  * Class ReportsService
@@ -31,13 +32,18 @@ class ReportsService
      */
     public function getApiData($params)
     {
-        $res = $this->client->get(self::REPORT_API.$params);
-        $response = json_decode($res->getBody());
-        if ($response){
-            return $response;
-        } else {
-            json_decode(false);
+        try {
+            $res = $this->client->get(self::REPORT_API.$params);
+            $response = json_decode($res->getBody());
+            if ($response){
+                return $response;
+            } else {
+                json_decode(false);
+            }
+        } catch (ClientException $exception){
+            return null;
         }
+
     }
 
 }

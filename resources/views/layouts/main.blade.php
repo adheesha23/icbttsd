@@ -271,6 +271,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="{{ url('/daily-collection') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Daily Collection</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ url('/box-office-summary') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Box Office Summary Weekly</p>
