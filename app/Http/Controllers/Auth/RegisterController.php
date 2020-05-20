@@ -44,7 +44,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -60,7 +60,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
@@ -78,22 +78,8 @@ class RegisterController extends Controller
      */
     public function redirectTo()
     {
-        switch (Auth::user()->role) {
-            case 1:
-                $this->redirectTo = '/admin';
-                return $this->redirectTo;
-                break;
-            case 2:
-                $this->redirectTo = '/manager';
-                return $this->redirectTo;
-                break;
-            case 3:
-                $this->redirectTo = '/auditor';
-                return $this->redirectTo;
-                break;
-            default:
-                $this->redirectTo = '/login';
-                return $this->redirectTo;
-        }
+        $this->redirectTo = '/home';
+        return $this->redirectTo;
+
     }
 }

@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Register') }}</div>
+                    <div class="card-header">{{ __('Edit User') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{action('UserController@update', $user->id)}}">
                             @csrf
 
                             <div class="form-group row">
@@ -17,7 +17,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                            class="form-control @error('name') is-invalid @enderror" name="name"
-                                           value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                           value="{{ $user->name }}" required autocomplete="name" autofocus>
 
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -34,7 +34,7 @@
                                 <div class="col-md-6">
                                     <input id="email" type="email"
                                            class="form-control @error('email') is-invalid @enderror" name="email"
-                                           value="{{ old('email') }}" required autocomplete="email">
+                                           value="{{ $user->email}}" required autocomplete="email">
 
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -53,9 +53,9 @@
                                             class="form-control @error('role') is-invalid @enderror" name="role"
                                             value="{{ old('role') }}" required autocomplete="role" autofocus>
                                         <option value="0">Please Select</option>
-                                        <option value="1">Admin</option>
-                                        <option value="2">Manager</option>
-                                        <option value="3">Auditor</option>
+                                        <option value="1" {{$user->role == 1 ? 'selected':''}}>Admin</option>
+                                        <option value="2" {{$user->role == 2 ? 'selected':''}}>Manager</option>
+                                        <option value="3" {{$user->role == 3 ? 'selected':''}}>Auditor</option>
                                     </select>
                                     @error('role')
                                     <span class="invalid-feedback" role="alert">
@@ -91,11 +91,11 @@
                                            name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
-
+                            {{method_field('PUT')}}
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Register') }}
+                                        {{ __('Update User') }}
                                     </button>
                                 </div>
                             </div>

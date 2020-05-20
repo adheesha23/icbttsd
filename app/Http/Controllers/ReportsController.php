@@ -16,6 +16,7 @@ use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
 use App\Services\Reports\ExportReportService;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Auth;
 
 class ReportsController extends Controller
 {
@@ -59,18 +60,19 @@ class ReportsController extends Controller
      */
     public function boxOfficeSummary(Request $request)
     {
+        if(Auth::user()->role == 1 || Auth::user()->role == 2){
         $requestParams = $request->all();
         $fomDate = null;
         $toDate = null;
 
-        if($requestParams){
+        if ($requestParams) {
             $request->validate([
-                'from-date'   => 'required|date|date_format:Y-m-d|before:to-date',
-                'to-date'   => 'required|date|date_format:Y-m-d|after:from-date',
+                'from-date' => 'required|date|date_format:Y-m-d|before:to-date',
+                'to-date' => 'required|date|date_format:Y-m-d|after:from-date',
             ]);
             $fomDate = $requestParams['from-date'];
             $toDate = $requestParams['to-date'];
-            $param = 'box-office?StartDate='.$fomDate.'&EndDate='.$toDate;
+            $param = 'box-office?StartDate=' . $fomDate . '&EndDate=' . $toDate;
         } else {
             $param = 'box-office?StartDate=2020-01-01&EndDate=2020-06-01';
         }
@@ -79,14 +81,16 @@ class ReportsController extends Controller
 
         $theaterSales = $response->theatreSales;
 
-        if (isset($requestParams['export'])){
-            return  $this->exportReportService->getSelectionExport($theaterSales)->generate('box-office-summary-');
+        if (isset($requestParams['export'])) {
+            return $this->exportReportService->getSelectionExport($theaterSales)->generate('box-office-summary-');
         }
 
-        $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
+        $dateRage = ['fromDate' => $fomDate, 'toDate' => $toDate];
 
         return view('reports.summary', compact('theaterSales', 'dateRage'));
-
+    } else {
+            return redirect('home');
+        }
     }
 
     /**
@@ -222,6 +226,7 @@ class ReportsController extends Controller
      */
     public function getConcessionSalesByMovie(Request $request)
     {
+        if(Auth::user()->role == 1 || Auth::user()->role == 2){
         $requestParams = $request->all();
         $fomDate = null;
         $toDate = null;
@@ -252,11 +257,14 @@ class ReportsController extends Controller
         $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
 
         return view('reports.concession', compact('records', 'dateRage'));
-
+        } else {
+            return redirect('home');
+        }
     }
 
     public function getOccupancyBySessionByTheatreAndDate(Request $request, MessageBag $message_bag)
     {
+        if(Auth::user()->role == 1 || Auth::user()->role == 2){
         $requestParams = $request->all();
         $param = null;
         $records = null;
@@ -308,6 +316,8 @@ class ReportsController extends Controller
         $theatres = $this->theatreService->getAllTheatres();
 
         return view('reports.occupancy', compact('records', 'theatres', 'history'));
-
+    } else {
+return redirect('home');
+}
     }
 }
