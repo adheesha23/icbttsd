@@ -25,12 +25,12 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Tickets Sales By Theatre</h3>
+                <h3 class="card-title">Occupancy By Session</h3>
             </div>
             <!-- /.card-header -->
 
 
-            <form role="form" method="POST" action="{{ route('reports.ticketssales') }}">
+            <form role="form" method="POST" action="{{ route('reports.occupancy') }}">
                 {{ csrf_field() }}
                 <div class="card-body">
                     <div class="row">
@@ -98,27 +98,49 @@
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Browser: activate to sort column ascending" style="width: 220px;">
-                                        Theatre
+                                        Theatre Halls
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Platform(s): activate to sort column ascending"
-                                        style="width: 194px;">Total Sales
+                                        style="width: 194px;">Total Tickets
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Engine version: activate to sort column ascending"
-                                        style="width: 144px;">Tax
+                                        style="width: 144px;">Used Tickets
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="Engine version: activate to sort column ascending"
+                                        style="width: 144px;">Start Time
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="Engine version: activate to sort column ascending"
+                                        style="width: 144px;">Date
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="Engine version: activate to sort column ascending"
+                                        style="width: 144px;">Day
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="Engine version: activate to sort column ascending"
+                                        style="width: 144px;">Percentage
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @if($records)
                                     @foreach($records as $record)
+                                        @foreach($record->occupancyPercs as $occupancy)
                                         <tr role="row" class="odd">
                                             <td class="sorting_1">{{$record->movieName}}</td>
-                                            <td>{{$record->theatre}}</td>
-                                            <td>{{number_format((float)$record->totalSales, 2, '.', '')}}</td>
-                                            <td>{{number_format((float)$record->tax, 2, '.', '')}}</td>
+                                            <td>{{$occupancy->theartreHalls}}</td>
+                                            <td>{{$occupancy->totalTickets}}</td>
+                                            <td>{{$occupancy->usedTickets}}</td>
+                                            <td>{{$occupancy->startTime}}</td>
+                                            <td>{{$occupancy->date}}</td>
+                                            <td>{{$occupancy->day}}</td>
+                                            <td>{{number_format((float)$occupancy->percentage, 2, '.', '')}}</td>
                                         </tr>
+                                    @endforeach
                                     @endforeach
                                 @endif
                                 </tbody>

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -49,4 +49,5 @@ Route::get('/daily-collection', 'ReportsController@getDailyCollectionByMovieAndT
 Route::post('/daily-collection', 'ReportsController@getDailyCollectionByMovieAndTheatre')->name('reports.dailycollection');
 Route::get('/concession-sales', 'ReportsController@getConcessionSalesByMovie');
 Route::post('/concession-sales', 'ReportsController@getConcessionSalesByMovie')->name('reports.concession');
-Route::get('/sales/pdf','ReportsController@export_pdf');
+Route::get('/occupancy-by-session', 'ReportsController@getOccupancyBySessionByTheatreAndDate');
+Route::post('/occupancy-by-session', 'ReportsController@getOccupancyBySessionByTheatreAndDate')->name('reports.occupancy');

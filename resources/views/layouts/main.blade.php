@@ -254,7 +254,7 @@
                             <p>
                                 Reports
                                 <i class="fas fa-angle-left right"></i>
-                                <span class="badge badge-info right">5</span>
+                                <span class="badge badge-info right">8</span>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
@@ -300,15 +300,8 @@
                                     <p>Concession Sales</p>
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{ url('/sales') }}" class="nav-link">--}}
-{{--                                    <i class="far fa-circle nav-icon"></i>--}}
-{{--                                    <p>FnB By Day</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-
                             <li class="nav-item">
-                                <a href="{{ url('/sales') }}" class="nav-link">
+                                <a href="{{ url('/occupancy-by-session') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Occupancy By Session</p>
                                 </a>

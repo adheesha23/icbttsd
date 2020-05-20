@@ -15,6 +15,7 @@ use Illuminate\View\View;
 use Carbon\Carbon;
 use Illuminate\Support\MessageBag;
 use App\Services\Reports\ExportReportService;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportsController extends Controller
 {
@@ -215,6 +216,10 @@ class ReportsController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return Application|Factory|View|StreamedResponse|void|null
+     */
     public function getConcessionSalesByMovie(Request $request)
     {
         $requestParams = $request->all();
@@ -247,6 +252,62 @@ class ReportsController extends Controller
         $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
 
         return view('reports.concession', compact('records', 'dateRage'));
+
+    }
+
+    public function getOccupancyBySessionByTheatreAndDate(Request $request, MessageBag $message_bag)
+    {
+        $requestParams = $request->all();
+        $param = null;
+        $records = null;
+        $fomDate = null;
+        $toDate = null;
+        $theatreId = null;
+        if($requestParams) {
+            $theatreId = $requestParams['theatreSelect'];
+            $request->validate([
+                'from-date' => 'required|date|date_format:Y-m-d|before:to-date',
+                'to-date' => 'required|date|date_format:Y-m-d|after:from-date',
+            ]);
+            $fomDate = $requestParams['from-date'];
+            $toDate = $requestParams['to-date'];
+            $param = 'occupany-season?StartDate='.$fomDate.'&EndDate='.$toDate.'&TheatreId=' . $theatreId;
+        }else {
+            $param = '';
+        }
+        $response = $this->reportService->getApiData($param);
+
+        if ($response){
+            $records = $response->occupancy;
+        } else {
+            $records = null;
+        }
+
+        if (isset($requestParams['export'])){
+            $exportArr = array();
+            $exportArrP = array();
+            foreach ($records as $record){
+                foreach ($record->occupancyPercs as $occupancy){
+                    $exportArr['movieName'] = $record->movieName;
+                    $exportArr['theatreHalls'] = $occupancy->theartreHalls;
+                    $exportArr['totalTickets'] = $occupancy->totalTickets;
+                    $exportArr['usedTickets'] = $occupancy->usedTickets;
+                    $exportArr['startTime'] = $occupancy->startTime;
+                    $exportArr['date'] = $occupancy->date;
+                    $exportArr['day'] = $occupancy->day;
+                    $exportArr['percentage'] = number_format((float)$occupancy->percentage, 2, '.', '');
+                    array_push($exportArrP,$exportArr);
+                }
+            }
+//            dd($exportArrP);
+            return  $this->exportReportService->getSelectionExport($exportArrP)->generate('occupancy-by-session-');
+        }
+
+
+        $history = ['fromDate' =>$fomDate, 'toDate' => $toDate, 'theatreId' => $theatreId];
+        $theatres = $this->theatreService->getAllTheatres();
+
+        return view('reports.occupancy', compact('records', 'theatres', 'history'));
 
     }
 }
