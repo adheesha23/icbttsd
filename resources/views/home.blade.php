@@ -534,9 +534,9 @@
                             </div>
                             <!-- /.card-tools -->
                         </div>
-{{--                        <div class="card-body">--}}
-{{--                            <div id="world-map" style="height: 250px; width: 100%;"></div>--}}
-{{--                        </div>--}}
+                        <div class="card-body">
+                            <div id="world-map" style="height: 250px; width: 100%;"></div>
+                        </div>
                         <!-- /.card-body-->
                         <div class="card-footer bg-transparent">
                             <div class="row">

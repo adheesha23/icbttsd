@@ -53,24 +53,6 @@ class ReportsController extends Controller
     }
 
     /**
-     * @return mixed
-     */
-    public function export_pdf()
-    {
-        $client = new Client();
-        $res = $client->get('http://api.securedserver.xyz/api/report/sales');
-        $response = json_decode($res->getBody());
-        $theaterSales = $response->result->theatreSales;
-        // Send data to the view using loadView function of PDF facade
-        $pdf = PDF::loadView('reports.sales', $theaterSales);
-        // If you want to store the generated pdf to the server then you can use the store function
-        $pdf->save(storage_path() . '_filename.pdf');
-        // Finally, you can download the file using download function
-        return $pdf->download('reports.sales');
-
-    }
-
-    /**
      * @param Request $request
      * @return Application|Factory|View
      */
@@ -230,6 +212,41 @@ class ReportsController extends Controller
 
 
         return view('reports.dailyCollection', compact('records', 'theatres', 'movies', 'history'));
+
+    }
+
+    public function getConcessionSalesByMovie(Request $request)
+    {
+        $requestParams = $request->all();
+        $fomDate = null;
+        $toDate = null;
+
+        if($requestParams){
+            $request->validate([
+                'from-date'   => 'required|date|date_format:Y-m-d|before:to-date',
+                'to-date'   => 'required|date|date_format:Y-m-d|after:from-date',
+            ]);
+            $fomDate = $requestParams['from-date'];
+            $toDate = $requestParams['to-date'];
+            $param = 'concession-sales?StartDate='.$fomDate.'&EndDate='.$toDate;
+        } else {
+            $param = '';
+        }
+
+        $response = $this->reportService->getApiData($param);
+        if ($response){
+            $records = $response->concessionSales;
+        } else {
+            $records = null;
+        }
+
+        if (isset($requestParams['export'])){
+            return  $this->exportReportService->getSelectionExport($records)->generate('concession-sales-');
+        }
+
+        $dateRage = ['fromDate' =>$fomDate, 'toDate' => $toDate];
+
+        return view('reports.concession', compact('records', 'dateRage'));
 
     }
 }

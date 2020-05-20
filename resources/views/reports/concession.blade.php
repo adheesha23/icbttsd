@@ -25,10 +25,10 @@
     <section class="content">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Box Office Summary Movie wise</h3>
+                <h3 class="card-title">Concession Sales Report</h3>
             </div>
             <!-- /.card-header -->
-            <form method="POST" action="{{ route('reports.boxofficesummary') }}">
+            <form method="POST" action="{{ route('reports.concession') }}">
                 {{ csrf_field() }}
                 <div class="card-body">
                     <div class="row">
@@ -76,51 +76,86 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
-                                   aria-describedby="example1_info">
+                                   aria-describedby="example1_info" style="display: block; overflow-x: auto; white-space: nowrap;">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Rendering engine: activate to sort column descending"
-                                        style="width: 170px;">Movie Name
+                                        style="width: 170px;">Movie
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Browser: activate to sort column ascending" style="width: 220px;">
-                                        Complement Tickets
+                                        Admits
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Platform(s): activate to sort column ascending"
-                                        style="width: 194px;">Total Booked Tickets
+                                        style="width: 194px;">Concession Transaction
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Engine version: activate to sort column ascending"
-                                        style="width: 144px;">Total Tickets
+                                        style="width: 144px;">Concession Sales
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
-                                        Box Office
+                                        Concession Cost
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
-                                        Tax
+                                        Concession Margin
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
-                                        Net Income
+                                        Box office
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Total Sale And Concession
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Average Concession
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Tickets Per Person
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Concession Per Person
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Total Ticket Concession Per Person
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        PerConcession Vs Ticket
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Per Concession Vs Admits
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @if($theaterSales)
-                                @foreach($theaterSales as $theaterSale)
+                                @if($records)
+                                @foreach($records as $record)
                                     <tr role="row" class="odd">
-                                        <td class="sorting_1">{{$theaterSale->movieName}}</td>
-                                        <td>{{$theaterSale->complimentTickets}}</td>
-                                        <td>{{$theaterSale->totalBookedTicket}}</td>
-                                        <td>{{$theaterSale->totalTickets}}</td>
-                                        <td>{{$theaterSale->boxOffice}}</td>
-                                        <td>{{$theaterSale->tax}}</td>
-                                        <td>{{$theaterSale->netIncome}}</td>
+                                        <td class="sorting_1">{{$record->movieName}}</td>
+                                        <td>{{$record->admits}}</td>
+                                        <td>{{$record->concessionTransactions}}</td>
+                                        <td>{{$record->concessionSales}}</td>
+                                        <td>{{$record->concessionCost}}</td>
+                                        <td>{{$record->concessionMargin}}</td>
+                                        <td>{{$record->boxOffice}}</td>
+                                        <td>{{$record->totalSaleAndConcession}}</td>
+                                        <td>{{$record->averageConcession}}</td>
+                                        <td>{{$record->ticketsPerPerson}}</td>
+                                        <td>{{$record->concessionPerPerson}}</td>
+                                        <td>{{$record->totalTickConcPerPerson}}</td>
+                                        <td>{{$record->perConcesVsTick}}</td>
+                                        <td>{{$record->perConcesVsAdmits}}</td>
                                     </tr>
                                 @endforeach
                                 @endif
