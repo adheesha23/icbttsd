@@ -38,10 +38,10 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="index3.html" class="nav-link">Home</a>
+                <a href="{{ url('/home') }}" class="nav-link">Home</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a href="#" class="nav-link">Contact</a>
+                <a href="http://www.nfc.gov.lk/contact.php" class="nav-link" target="_blank">Contact</a>
             </li>
         </ul>
 
@@ -294,12 +294,12 @@
                                     <p>Movies</p>
                                 </a>
                             </li>
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{ url('/sales') }}" class="nav-link">--}}
-{{--                                    <i class="far fa-circle nav-icon"></i>--}}
-{{--                                    <p>Fixed Sidebar</p>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
+                            <li class="nav-item">
+                                <a href="{{ url('/concession-sales') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Concession Sales</p>
+                                </a>
+                            </li>
 {{--                            <li class="nav-item">--}}
 {{--                                <a href="{{ url('/sales') }}" class="nav-link">--}}
 {{--                                    <i class="far fa-circle nav-icon"></i>--}}
@@ -571,7 +571,7 @@
 {{--                                    <p>Contacts</p>--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
-{{--                        </ul>--}}
+{{--                        </ul>--}}t
 {{--                    </li>--}}
 {{--                    <li class="nav-item has-treeview">--}}
 {{--                        <a href="#" class="nav-link">--}}
