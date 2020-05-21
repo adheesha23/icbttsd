@@ -46,3 +46,8 @@ Route::get('/concession-sales', 'ReportsController@getConcessionSalesByMovie');
 Route::post('/concession-sales', 'ReportsController@getConcessionSalesByMovie')->name('reports.concession');
 Route::get('/occupancy-by-session', 'ReportsController@getOccupancyBySessionByTheatreAndDate');
 Route::post('/occupancy-by-session', 'ReportsController@getOccupancyBySessionByTheatreAndDate')->name('reports.occupancy');
+
+//Routes related for graphs
+
+Route::get('/movie-sales', 'ChartsController@movieSalesByTheatre');
+Route::post('/movie-sales', 'ChartsController@movieSalesByTheatre')->name('charts.moviesales');
