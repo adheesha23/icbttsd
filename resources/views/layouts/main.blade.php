@@ -61,7 +61,7 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <!-- Messages Dropdown Menu -->
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="display: none">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-comments"></i>
                     <span class="badge badge-danger navbar-badge">3</span>
@@ -122,7 +122,7 @@
                 </div>
             </li>
             <!-- Notifications Dropdown Menu -->
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="display: none">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell"></i>
                     <span class="badge badge-warning navbar-badge">15</span>
@@ -351,7 +351,7 @@
                     @if(Auth::user()->role == 1)
                         <li class="nav-item">
                             <a href="{{ url('/users') }}" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
                                     Users
                                 </p>

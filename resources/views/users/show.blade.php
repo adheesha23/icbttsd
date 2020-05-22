@@ -14,7 +14,7 @@
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-form-label text-md-left">
                                     {{$user->name}}
                                 </div>
                             </div>
@@ -22,14 +22,14 @@
                                 <label for="email"
                                        class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-form-label text-md-left">
                                     {{$user->email}}
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-form-label text-md-left">
                                     {{$user->role == 1 ? 'Admin' : ($user->role == 2 ? 'Manager' : 'Auditor')}}
                                 </div>
                             </div>

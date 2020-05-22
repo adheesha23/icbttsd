@@ -26,6 +26,7 @@
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Users</h3>
+                <a class="btn btn-primary float-right" href="{{url('/register')}}">Add User</a>
             </div>
             <div class="card-body">
                 <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
@@ -39,11 +40,7 @@
                                     <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Rendering engine: activate to sort column descending"
-                                        style="width: 170px;">No
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                        aria-label="Browser: activate to sort column ascending" style="width: 220px;">
-                                        User Name
+                                        style="width: 170px;">User Name
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Platform(s): activate to sort column ascending"
@@ -65,18 +62,30 @@
                                         aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
                                         Edit
                                     </th>
+                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                                        aria-label="CSS grade: activate to sort column ascending" style="width: 101px;">
+                                        Delete
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
                                     <tr role="row" class="odd">
-                                        <td class="sorting_1">{{$user->id}}</td>
+{{--                                        <td class="sorting_1">{{$user->id}}</td>--}}
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->role == 1 ? 'Admin' : ($user->role == 2 ? 'Manager' : 'Auditor')}}</td>
                                         <td>{{$user->created_at}}</td>
-                                        <td><a href="{{action('UserController@show', $user['id'])}}">View</a></td>
-                                        <td><a href="{{action('UserController@edit', $user['id'])}}">Edit</a></td>
+                                        <td><a href="{{action('UserController@show', $user['id'])}}"><i class="fas fa-eye"></i></a></td>
+                                        <td><a href="{{action('UserController@edit', $user['id'])}}"><i class="fas fa-user-edit"></i></a></td>
+{{--                                        <td><a href="{{action('UserController@destroy', $user['id'])}}"><i class="fas fa-trash-alt"></i></a></td>--}}
+                                        <td>
+                                            <form action="{{ action('UserController@destroy', $user->id) }}" method="POST">
+                                                {{ method_field('DELETE') }}
+                                                {{ csrf_field() }}
+                                                <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
