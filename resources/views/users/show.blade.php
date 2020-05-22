@@ -10,7 +10,11 @@
                     <div class="card-body">
                         <form method="POST" action="">
                             @csrf
-
+                            <div class="form-group row">
+                            <div class="card col-md-3">
+                                <img class="card-img-top" src="{{url('uploads/'.$user->filename)}}" alt="{{$user->filename}}">
+                            </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 

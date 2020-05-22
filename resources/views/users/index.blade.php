@@ -76,8 +76,8 @@
                                         <td>{{$user->email}}</td>
                                         <td>{{$user->role == 1 ? 'Admin' : ($user->role == 2 ? 'Manager' : 'Auditor')}}</td>
                                         <td>{{$user->created_at}}</td>
-                                        <td><a href="{{action('UserController@show', $user['id'])}}"><i class="fas fa-eye"></i></a></td>
-                                        <td><a href="{{action('UserController@edit', $user['id'])}}"><i class="fas fa-user-edit"></i></a></td>
+                                        <td><a href="{{action('UserController@show',  $user->id)}}"><i class="fas fa-eye"></i></a></td>
+                                        <td><a href="{{action('UserController@edit',  $user->id)}}"><i class="fas fa-user-edit"></i></a></td>
 {{--                                        <td><a href="{{action('UserController@destroy', $user['id'])}}"><i class="fas fa-trash-alt"></i></a></td>--}}
                                         <td>
                                             <form action="{{ action('UserController@destroy', $user->id) }}" method="POST">

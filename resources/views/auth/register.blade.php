@@ -8,7 +8,7 @@
                     <div class="card-header">{{ __('Register') }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group row">
@@ -64,7 +64,17 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            <div class="form-group row">
+                                <label for="filename" class="col-md-4 col-form-label text-md-right">{{ __('Profile Image') }}</label>
+                                <div class="col-md-6">
+                                    <input type="file" class="form-control @error('filename') is-invalid @enderror" name="filename" id="filename">
+                                    @error('filename')
+                                    <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label for="password"
                                        class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>

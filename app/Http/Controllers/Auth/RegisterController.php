@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class RegisterController extends Controller
 {
@@ -53,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'role' => ['required'],
+            'filename' => ['mimes:jpeg,bmp,png'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -65,10 +68,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = app('request');
+
+        if($request->hasfile('filename')){
+            $cover = $request->file('filename');
+            $extension = $cover->getClientOriginalExtension();
+
+            Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+        }
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'role' => $data['role'],
+            'mime' => isset($cover) ? $cover->getClientMimeType() : null,
+            'original_filename' => isset($cover) ? $cover->getClientOriginalName() : null,
+            'filename' => isset($cover) ? $cover->getFilename().'.'.$extension : null,
             'password' => Hash::make($data['password']),
         ]);
     }
