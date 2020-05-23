@@ -18,7 +18,7 @@
         </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-    <form role="form" method="POST" action="{{ route('charts.moviesales') }}">
+    <form role="form" method="POST" action="{{ route('charts.ticketsales') }}">
         {{ csrf_field() }}
         <div class="card-body">
             <div class="row">
@@ -45,16 +45,6 @@
                                value="{{$history['toDate'] ? $history['toDate'] : ''}}" required>
                     </div>
                     <!-- /.input group -->
-                </div>
-                <div class="form-group col-md-3">
-                    <label>Select Theatre</label>
-                    <select class="form-control select2" name="theatreSelect" id="theatreSelect">
-                        <option value="0" selected="selected">Choose Theatre</option>
-                        @foreach($theatres as $theatre)
-                            <option
-                                value="{{$theatre->id}}" {{$history['theatreId'] == $theatre->id?'selected':''}}>{{$theatre->name}}</option>
-                        @endforeach
-                    </select>
                 </div>
                 <div class="form-group col-md-3">
                     <div class="form-check">
@@ -98,9 +88,9 @@
                     <!-- /.card -->
 
                     <!-- DONUT CHART -->
-                    <div class="card card-danger" style="display: none">
+                    <div class="card card-danger" >
                         <div class="card-header">
-                            <h3 class="card-title">Donut Chart</h3>
+                            <h3 class="card-title">Total Ticket Sales of the Movies</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
@@ -189,7 +179,7 @@
                     <!-- /.card -->
 
                     <!-- STACKED BAR CHART -->
-                    <div class="card card-success">
+                    <div class="card card-success" style="display: none">
                         <div class="card-header">
                             <h3 class="card-title">Tax Earnings From Movies</h3>
 
@@ -218,6 +208,7 @@
         </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
 @endsection
 @section('js')
     <script>
@@ -238,7 +229,7 @@
 
             var areaChartData = {
                 // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                labels: <?php echo json_encode($movieArr)?>,
+                labels: [],
                 datasets: [
                     {
                         label: 'Taxes',
@@ -249,7 +240,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: {{json_encode($taxArr)}}
+                        data: []
                     },
                     {
                         label: 'Total Sales',
@@ -261,7 +252,7 @@
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
                         // data: [28, 48, 40, 19, 86, 27, 90]
-                        data: {{json_encode($salesArr)}}
+                        data: []
                     },
                 ]
             }
@@ -315,18 +306,12 @@
             // Get context with jQuery - using jQuery's .get() method.
             var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
             var donutData = {
-                labels: [
-                    'Chrome',
-                    'IE',
-                    'FireFox',
-                    'Safari',
-                    'Opera',
-                    'Navigator',
-                ],
+                labels:<?php echo json_encode($movieArr)?>,
                 datasets: [
                     {
-                        data: [700, 500, 400, 600, 300, 100],
-                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                        data: <?php echo json_encode($ticketsArr)?>,
+                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#FF7F50',
+                            '#00FF7F', '#5F9EA0','#7B68EE', '#EE82EE', '#8B008B', '#2F4F4F', '#F4A460'],
                     }
                 ]
             }

@@ -46,11 +46,7 @@
                                     <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1"
                                         colspan="1" aria-sort="ascending"
                                         aria-label="Rendering engine: activate to sort column descending"
-                                        style="width: 170px;">No
-                                    </th>
-                                    <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
-                                        aria-label="Browser: activate to sort column ascending" style="width: 220px;">
-                                        Movie
+                                        style="width: 170px;">Movie
                                     </th>
                                     <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
                                         aria-label="Platform(s): activate to sort column ascending"
@@ -73,7 +69,7 @@
                                 <tbody>
                                 @foreach($records as $record)
                                     <tr role="row" class="odd">
-                                        <td class="sorting_1">{{$record->id}}</td>
+{{--                                        <td class="sorting_1">{{$record->id}}</td>--}}
                                         <td>{{$record->name}}</td>
                                         <td>{{$record->screeningDuration}}</td>
                                         <td>{{date('Y-m-d', strtotime($record->releaseDate))}}</td>

@@ -23,6 +23,7 @@ Route::get('/auditor', 'AuditorController@index')->name('auditor')->middleware('
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/auditor', 'HomeController@index')->name('home');
+Route::get('/manager', 'HomeController@index')->name('home');
 
 
 
@@ -51,3 +52,5 @@ Route::post('/occupancy-by-session', 'ReportsController@getOccupancyBySessionByT
 
 Route::get('/movie-sales', 'ChartsController@movieSalesByTheatre');
 Route::post('/movie-sales', 'ChartsController@movieSalesByTheatre')->name('charts.moviesales');
+Route::get('/ticket-sales-graph', 'ChartsController@getMovieTicketSales');
+Route::post('/ticket-sales-graph', 'ChartsController@getMovieTicketSales')->name('charts.ticketsales');

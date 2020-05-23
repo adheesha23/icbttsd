@@ -329,9 +329,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/charts') }}" class="nav-link">
+                                <a href="{{ url('/ticket-sales-graph') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>ChartJS</p>
+                                    <p>Ticket Sales</p>
                                 </a>
                             </li>
                             <li class="nav-item">
