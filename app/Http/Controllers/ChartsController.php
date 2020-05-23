@@ -87,8 +87,8 @@ class ChartsController extends Controller
 
             foreach ($records as $record) {
                 $movieArr[] = $record->movieName;
-                $salesArr[] = number_format((float)$record->totalSales, 2, '.', '');
-                $taxArr[] = number_format((float)$record->tax, 2, '.', '');
+                $salesArr[] = $record->totalSales;
+                $taxArr[] = $record->tax;
             }
 
             $history = ['fromDate' => $fomDate, 'toDate' => $toDate, 'theatreId' => $theatreId];

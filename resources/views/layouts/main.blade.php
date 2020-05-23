@@ -341,12 +341,6 @@
                                     <p>Tickets Income</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ url('/charts') }}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Inline</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     @endif
