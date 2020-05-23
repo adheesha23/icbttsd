@@ -87,8 +87,8 @@ class ChartsController extends Controller
 
             foreach ($records as $record) {
                 $movieArr[] = $record->movieName;
-                $salesArr[] = $record->totalSales;
-                $taxArr[] = $record->tax;
+                $salesArr[] = number_format((float)$record->totalSales, 2, '.', '');
+                $taxArr[] = number_format((float)$record->tax, 2, '.', '');
             }
 
             $history = ['fromDate' => $fomDate, 'toDate' => $toDate, 'theatreId' => $theatreId];
@@ -139,6 +139,50 @@ class ChartsController extends Controller
             $history = ['fromDate' => $fomDate, 'toDate' => $toDate];
 
             return view('charts.ticketSales', compact('movieArr', 'ticketsArr', 'history'));
+        } else {
+            return redirect('home');
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param MessageBag $message_bag
+     * @return Application|Factory|RedirectResponse|Redirector|View
+     */
+    public function getMovieTicketsIncome(Request $request, MessageBag $message_bag)
+    {
+        if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            $requestParams = $request->all();
+            $fomDate = null;
+            $toDate = null;
+
+            if ($requestParams) {
+                $request->validate([
+                    'from-date' => 'required|date|date_format:Y-m-d|before:to-date',
+                    'to-date' => 'required|date|date_format:Y-m-d|after:from-date',
+                ]);
+                $fomDate = $requestParams['from-date'];
+                $toDate = $requestParams['to-date'];
+                $param = 'box-office?StartDate=' . $fomDate . '&EndDate=' . $toDate;
+            } else {
+                $param = 'box-office?StartDate=2020-01-01&EndDate=2020-06-01';
+            }
+
+            $response = $this->reportService->getApiData($param);
+            if($response){
+                $theaterSales = $response->theatreSales;
+            } else {
+                $theaterSales = null;
+            }
+
+            foreach ($theaterSales as $record) {
+                $movieArr[] = $record->movieName;
+                $ticketsArr[] = number_format((float)$record->netIncome, 2, '.', '');
+            }
+
+            $history = ['fromDate' => $fomDate, 'toDate' => $toDate];
+
+            return view('charts.ticketsIncome', compact('movieArr', 'ticketsArr', 'history'));
         } else {
             return redirect('home');
         }

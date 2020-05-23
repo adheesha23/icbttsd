@@ -313,6 +313,7 @@
                             @endif
                         </ul>
                     </li>
+                    @if(Auth::user()->role == 1 || Auth::user()->role == 2)
                     <li class="nav-item has-treeview">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-pie"></i>
@@ -335,9 +336,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ url('/charts') }}" class="nav-link">
+                                <a href="{{ url('/tickets-income-graph') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Flot</p>
+                                    <p>Tickets Income</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -348,6 +349,7 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
                     @if(Auth::user()->role == 1)
                         <li class="nav-item">
                             <a href="{{ url('/users') }}" class="nav-link">

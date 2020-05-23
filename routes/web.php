@@ -54,3 +54,5 @@ Route::get('/movie-sales', 'ChartsController@movieSalesByTheatre');
 Route::post('/movie-sales', 'ChartsController@movieSalesByTheatre')->name('charts.moviesales');
 Route::get('/ticket-sales-graph', 'ChartsController@getMovieTicketSales');
 Route::post('/ticket-sales-graph', 'ChartsController@getMovieTicketSales')->name('charts.ticketsales');
+Route::get('/tickets-income-graph', 'ChartsController@getMovieTicketsIncome');
+Route::post('/tickets-income-graph', 'ChartsController@getMovieTicketsIncome')->name('charts.ticketsincome');
