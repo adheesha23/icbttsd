@@ -27,6 +27,8 @@ class UserController extends Controller
         if(Auth::user()->role == 1 ) {
             $users = User::all();
             return view('users.index', compact('users'));
+        } else {
+            return redirect('home');
         }
     }
 
@@ -53,6 +55,8 @@ class UserController extends Controller
         if(Auth::user()->role == 1 ) {
             $user = User::findOrFail($id);
             return view('users.edit', compact('user'));
+        } else {
+            return redirect('home');
         }
     }
 
@@ -94,6 +98,8 @@ class UserController extends Controller
             $user->save();
 
             return redirect('users')->with('success', 'User updated successfully');
+        } else {
+            return redirect('home');
         }
     }
 
@@ -109,6 +115,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->delete();
             return redirect('users')->with('success', 'User deleted successfully');
+        } else {
+            return redirect('home');
         }
     }
 }
