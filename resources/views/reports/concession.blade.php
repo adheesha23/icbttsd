@@ -148,12 +148,12 @@
                                         <td>{{$record->concessionSales}}</td>
                                         <td>{{$record->concessionCost}}</td>
                                         <td>{{$record->concessionMargin}}</td>
-                                        <td>{{$record->boxOffice}}</td>
-                                        <td>{{$record->totalSaleAndConcession}}</td>
+                                        <td>{{number_format((float)$record->boxOffice, 2, '.', '')}}</td>
+                                        <td>{{number_format((float)$record->totalSaleAndConcession, 2, '.', '')}}</td>
                                         <td>{{$record->averageConcession}}</td>
-                                        <td>{{$record->ticketsPerPerson}}</td>
+                                        <td>{{number_format((float)$record->ticketsPerPerson, 2, '.', '')}}</td>
                                         <td>{{$record->concessionPerPerson}}</td>
-                                        <td>{{$record->totalTickConcPerPerson}}</td>
+                                        <td>{{number_format((float)$record->totalTickConcPerPerson, 2, '.', '')}}</td>
                                         <td>{{$record->perConcesVsTick}}</td>
                                         <td>{{$record->perConcesVsAdmits}}</td>
                                     </tr>

@@ -249,7 +249,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: {{json_encode($taxArr)}}
+                        data: <?php echo json_encode($taxArr); ?>
                     },
                     {
                         label: 'Total Sales',
@@ -261,7 +261,7 @@
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
                         // data: [28, 48, 40, 19, 86, 27, 90]
-                        data: {{json_encode($salesArr)}}
+                        data: <?php echo json_encode($salesArr); ?>
                     },
                 ]
             }

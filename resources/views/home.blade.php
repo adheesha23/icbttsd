@@ -28,9 +28,9 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3>{{165764}}</h3>
+                            <h3>{{365764}}</h3>
 
-                            <p>Ticket Sales</p>
+                            <p>Income Tax</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
@@ -58,7 +58,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>{{13}}</h3>
+                            <h3>{{14}}</h3>
 
                             <p>Movies</p>
                         </div>
